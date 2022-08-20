@@ -4,7 +4,7 @@ const port = 4000
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config/key');
-
+const { auth } = require('./middleware/auth');
 const { User } = require("./models/User");
 
 
@@ -22,7 +22,7 @@ mongoose.connect(config.mongoURI, {
 
 app.get('/', (req, res) => {res.send('Hello World!')})
 
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
 
     //회원가입 할때 필요한 정보들을 client에서 가져오면 그것들을 데이터 베이스에 넣어야함.
 
@@ -37,7 +37,7 @@ app.post('/register', (req, res) => {
     })
 })
 
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
 
     //요청된 이메일을 데이터베이스에서 있는지 찾는다.
     User.findOne({ email: req.body.email}, (err, user) => {
@@ -67,6 +67,10 @@ app.post('/login', (req, res) => {
 
         })
     })
+
+})
+
+app.post('/api/users.auth', auth, (req, res) => {
 
 })
 
