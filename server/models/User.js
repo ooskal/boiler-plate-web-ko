@@ -61,8 +61,8 @@ userSchma.methods.comparePassword = function (plainPassword, cb) {
 
     //plainPassword 암호화된 비밀번호가 맞는지 비교해야 함
     bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
-        if (err) return cb(err)
-            cb(null,isMatch)
+        if (err) return cb(err);
+            cb(null,isMatch);
     })
 }
 
@@ -74,7 +74,6 @@ userSchma.methods.generateToken = function(cb) {
 
     user.token = token
     user.save(function(err, user){
-
         if(err) return cb(err)
         cb(null, user)
     })
@@ -84,7 +83,7 @@ userSchma.methods.generateToken = function(cb) {
 userSchma.statics.findByToken = function (token, cb) {
     var user = this;
 
-    user._id + '' = token
+    //user._id + '' = token
 
     jwt.verify(token, 'secretToken', function(err, decoded) {
 
